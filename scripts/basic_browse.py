@@ -11,12 +11,22 @@ def run() -> None:
         context = browser.new_context(viewport={"width": 1280, "height": 800})
         page = context.new_page()
 
-        page.goto("https://playwright.dev")
+        # Navigate to the Wikipedia page for the 2025 NFL Draft
+        page.goto("https://en.wikipedia.org/wiki/2025_NFL_draft")
+
+        # Assert on the page title (typically "2025 NFL Draft - Wikipedia")
         title = page.title()
-        assert "Playwright" in title
+        assert "2025 NFL" in title and "Wikipedia" in title
         print(f"Page title: {title}")
 
-        page.screenshot(path=str(screenshots_dir / "home.png"))
+        # Additionally, assert the main heading text for robustness
+        heading_text = page.get_by_role("heading", name="2025 NFL Draft").text_content()
+        # Wikipedia's displayed casing is usually "2025 NFL draft" (lowercase d), so compare case-insensitively
+        assert heading_text and "2025 nfl draft" in heading_text.lower()
+        print(f"Main heading: {heading_text}")
+
+        # Save a screenshot of the page
+        page.screenshot(path=str(screenshots_dir / "wikipedia_2025_nfl_draft.png"))
 
         context.close()
         browser.close()
