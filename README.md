@@ -2,6 +2,26 @@
 
 Learn Playwright — a fast, reliable headless browser automation library — using Python. This repo is a hands-on walkthrough with a tiny script and real tests you can run locally right now.
 
+## Use in GitHub Codespaces (students)
+
+This repo is ready to be used as a Template Repository so students can “Use this template” → “Create new repository” → “Create Codespace”. The dev container will automatically:
+- Install system libs for headless browsers
+- Create a Python virtualenv and install dependencies
+- Download Playwright browsers
+
+Once the Codespace is up:
+
+```bash
+# Option A: Use the Makefile helpers
+make run          # runs scripts/scrape_parse.py
+
+# Option B: Manual
+source .venv/bin/activate
+python scripts/scrape_parse.py
+```
+
+Students can then edit `scripts/scrape_parse.py` to change the URL, selectors, and parsing.
+
 ## Quick start
 
 These commands set up an isolated Python environment, install Playwright and test tooling, download browsers, and run everything.
@@ -31,11 +51,15 @@ Expected output: tests should pass, and you'll see a screenshot saved under `scr
 ```
 .
 ├─ scripts/
-│  └─ basic_browse.py       # Minimal script: launch → navigate → assert → screenshot
+│  ├─ basic_browse.py       # Minimal script: launch → navigate → assert → screenshot
+│  └─ scrape_parse.py       # Fetch rendered HTML with Playwright, parse with BeautifulSoup
 ├─ tests/
 │  ├─ test_example.py       # Title assertion using the built-in page fixture
 │  └─ test_locators.py      # Using accessible locators and URL assertion
-├─ requirements.txt         # Python deps (playwright, pytest, pytest-playwright)
+├─ requirements.txt         # Python deps (playwright, pytest, pytest-playwright, bs4)
+├─ Makefile                  # Convenience targets: setup, browsers, run, test
+├─ .gitignore                # Ignore venv, caches, artifacts
+└─ .devcontainer/            # Codespaces/dev container setup
 └─ README.md                # This tutorial
 ```
 
